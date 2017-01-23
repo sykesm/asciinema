@@ -101,7 +101,7 @@ func showCursorBack() {
 func main() {
 	env := environment()
 
-	if !util.IsUtf8Locale(env) {
+	if !util.IsUTF8Locale(env) {
 		fmt.Println("asciinema needs a UTF-8 native locale to run. Check the output of `locale` command.")
 		os.Exit(1)
 	}

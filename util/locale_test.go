@@ -6,21 +6,21 @@ import (
 	"github.com/sykesm/asciinema/util"
 )
 
-func TestGetLocaleCharset(t *testing.T) {
+func TestIsUTF8Locale(t *testing.T) {
 	var tests = []struct {
 		lcAll          string
 		lcCtype        string
 		lang           string
-		expectedResult string
+		expectedResult bool
 	}{
-		{"pl_PL.UTF-8", "pl_PL.ISO-8859-1", "pl_PL.ISO-8859-2", "UTF-8"},
-		{"cz_CS.utf8", "pl_PL.ISO-8859-1", "pl_PL.ISO-8859-2", "utf8"},
-		{"", "pl_PL.ISO-8859-1", "pl_PL.ISO-8859-2", "ISO-8859-1"},
-		{"", "", "pl_PL.ISO-8859-2", "ISO-8859-2"},
-		{"", "", "", "US-ASCII"},
-		{"UTF-8", "pl_PL.ISO-8859-1", "pl_PL.ISO-8859-2", "US-ASCII"},
-		{"", "ISO-8859-1", "pl_PL.ISO-8859-2", "ISO-8859-1"},
-		{"", "", "ISO-8859-2", "US-ASCII"},
+		{"pl_PL.UTF-8", "pl_PL.ISO-8859-1", "pl_PL.ISO-8859-2", true},
+		{"cz_CS.utf8", "pl_PL.ISO-8859-1", "pl_PL.ISO-8859-2", true},
+		{"", "pl_PL.ISO-8859-1", "pl_PL.ISO-8859-2", false},
+		{"", "", "pl_PL.ISO-8859-2", false},
+		{"", "", "", false},
+		{"UTF-8", "pl_PL.ISO-8859-1", "pl_PL.ISO-8859-2", false},
+		{"", "ISO-8859-1", "pl_PL.ISO-8859-2", false},
+		{"", "", "ISO-8859-2", false},
 	}
 
 	for _, test := range tests {
@@ -29,8 +29,7 @@ func TestGetLocaleCharset(t *testing.T) {
 			"LC_CTYPE": test.lcCtype,
 			"LANG":     test.lang,
 		}
-
-		if util.GetLocaleCharset(env) != test.expectedResult {
+		if util.IsUTF8Locale(env) != test.expectedResult {
 			t.Errorf("expected %v for %v", test.expectedResult, test)
 		}
 	}

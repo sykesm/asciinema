@@ -14,7 +14,7 @@ func extractCharset(locale, defaultCharset string) string {
 	return defaultCharset
 }
 
-func GetLocaleCharset(env map[string]string) string {
+func getLocaleCharset(env map[string]string) string {
 	if env["LC_ALL"] != "" {
 		return extractCharset(env["LC_ALL"], usAscii)
 	}
@@ -30,7 +30,7 @@ func GetLocaleCharset(env map[string]string) string {
 	return usAscii
 }
 
-func IsUtf8Locale(env map[string]string) bool {
-	charset := GetLocaleCharset(env)
+func IsUTF8Locale(env map[string]string) bool {
+	charset := getLocaleCharset(env)
 	return charset == "utf-8" || charset == "UTF-8" || charset == "utf8"
 }
