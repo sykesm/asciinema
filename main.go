@@ -13,7 +13,7 @@ import (
 	"github.com/sykesm/asciinema/util"
 )
 
-const Version = "1.2.0"
+const Version = "1.2.1-sykesm"
 
 var usage = `Record and share your terminal sessions, the right way.
 
