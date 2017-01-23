@@ -10,6 +10,7 @@ import (
 	"github.com/docopt/docopt-go"
 	"github.com/sykesm/asciinema/api"
 	"github.com/sykesm/asciinema/commands"
+	"github.com/sykesm/asciinema/config"
 	"github.com/sykesm/asciinema/util"
 )
 
@@ -114,7 +115,7 @@ func main() {
 	}()
 	defer showCursorBack()
 
-	cfg, err := util.GetConfig(env)
+	cfg, err := config.Get(env)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)

@@ -1,4 +1,4 @@
-package util
+package config
 
 import (
 	"errors"
@@ -7,6 +7,8 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+
+	"github.com/sykesm/asciinema/util"
 
 	gcfg "gopkg.in/gcfg.v1"
 )
@@ -48,15 +50,15 @@ type Config struct {
 }
 
 func (c *Config) ApiUrl() string {
-	return FirstNonBlank(c.Env["ASCIINEMA_API_URL"], c.File.API.URL, DefaultAPIURL)
+	return util.FirstNonBlank(c.Env["ASCIINEMA_API_URL"], c.File.API.URL, DefaultAPIURL)
 }
 
 func (c *Config) ApiToken() string {
-	return FirstNonBlank(c.File.API.Token, c.File.User.Token)
+	return util.FirstNonBlank(c.File.API.Token, c.File.User.Token)
 }
 
 func (c *Config) RecordCommand() string {
-	return FirstNonBlank(c.File.Record.Command, c.Env["SHELL"], DefaultCommand)
+	return util.FirstNonBlank(c.File.Record.Command, c.Env["SHELL"], DefaultCommand)
 }
 
 func (c *Config) RecordMaxWait() float64 {
@@ -71,7 +73,7 @@ func (c *Config) PlayMaxWait() float64 {
 	return c.File.Play.MaxWait
 }
 
-func GetConfig(env map[string]string) (*Config, error) {
+func Get(env map[string]string) (*Config, error) {
 	cfg, err := loadConfigFile(env)
 	if err != nil {
 		return nil, err
@@ -128,7 +130,7 @@ func readConfigFile(cfgPath string) (*ConfigFile, error) {
 }
 
 func createConfigFile(cfgPath string) error {
-	apiToken := NewUUID().String()
+	apiToken := util.NewUUID().String()
 	contents := fmt.Sprintf("[api]\ntoken = %v\n", apiToken)
 	os.MkdirAll(path.Dir(cfgPath), 0755)
 	return ioutil.WriteFile(cfgPath, []byte(contents), 0644)
