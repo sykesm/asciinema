@@ -110,17 +110,17 @@ func extractBody(response *http.Response) (string, error) {
 
 func handleError(response *http.Response, body string) error {
 	switch response.StatusCode {
-	case 400:
+	case http.StatusBadRequest:
 		return fmt.Errorf("Invalid request: %v", body)
-	case 401:
+	case http.StatusUnauthorized:
 		return fmt.Errorf("Invalid or revoked recorder token")
-	case 404:
+	case http.StatusNotFound:
 		return errors.New("Your client version is no longer supported. Please upgrade to the latest version.")
-	case 413:
+	case http.StatusRequestEntityTooLarge:
 		return errors.New("Sorry, your asciicast is too big.")
-	case 422:
+	case http.StatusUnprocessableEntity:
 		return fmt.Errorf("Invalid asciicast: %v", body)
-	case 504:
+	case http.StatusGatewayTimeout:
 		return errors.New("The server is down for maintenance. Try again in a minute.")
 	default:
 		return errors.New("HTTP status: " + response.Status)
