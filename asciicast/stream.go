@@ -12,7 +12,7 @@ type Stream struct {
 func NewStream(maxWait float64) *Stream {
 	return &Stream{
 		lastWriteTime: time.Now(),
-		maxWait:       time.Duration(maxWait*1000000) * time.Microsecond,
+		maxWait:       time.Duration(maxWait) * time.Second,
 	}
 }
 
