@@ -5,9 +5,9 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/asciinema/asciinema/api"
-	"github.com/asciinema/asciinema/asciicast"
-	"github.com/asciinema/asciinema/util"
+	"github.com/sykesm/asciinema/api"
+	"github.com/sykesm/asciinema/asciicast"
+	"github.com/sykesm/asciinema/util"
 )
 
 type RecordCommand struct {

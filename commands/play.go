@@ -1,8 +1,8 @@
 package commands
 
 import (
-	"github.com/asciinema/asciinema/asciicast"
-	"github.com/asciinema/asciinema/util"
+	"github.com/sykesm/asciinema/asciicast"
+	"github.com/sykesm/asciinema/util"
 )
 
 type PlayCommand struct {

@@ -6,8 +6,8 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/asciinema/asciinema/terminal"
-	"github.com/asciinema/asciinema/util"
+	"github.com/sykesm/asciinema/terminal"
+	"github.com/sykesm/asciinema/util"
 )
 
 const (
