@@ -42,6 +42,10 @@ func (s *Stream) incrementElapsedTime() time.Duration {
 	now := time.Now()
 	d := now.Sub(s.lastWriteTime)
 
+	// Time can move backwards
+	if d < 0 {
+		d = time.Millisecond
+	}
 	if s.maxWait > 0 && d > s.maxWait {
 		d = s.maxWait
 	}
