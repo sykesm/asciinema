@@ -11,7 +11,6 @@ import (
 	"github.com/creack/termios/raw"
 	"github.com/kr/pty"
 	"github.com/sykesm/asciinema/ptyx"
-	"github.com/sykesm/asciinema/util"
 	"golang.org/x/crypto/ssh/terminal"
 	"golang.org/x/text/encoding/unicode"
 	"golang.org/x/text/transform"
@@ -71,10 +70,9 @@ func (p *Pty) Record(command string, w io.Writer) error {
 	p.resize(master)
 
 	// start stdin -> master copying
-	stop := util.Copy(master, p.Stdin)
+	go io.Copy(master, p.Stdin)
 
 	// copy pty master -> p.stdout & w
-
 	stdout := transform.NewWriter(w, unicode.UTF8.NewEncoder())
 	defer stdout.Close()
 
@@ -95,9 +93,6 @@ func (p *Pty) Record(command string, w io.Writer) error {
 	case <-stdoutWaitChan:
 	case <-time.After(200 * time.Millisecond):
 	}
-
-	// stop stdin -> master copying
-	stop()
 
 	return nil
 }
